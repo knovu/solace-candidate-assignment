@@ -6,8 +6,8 @@ export interface CacheSlot {
 }
 
 export interface ICacheService {
-    getCachedSlot(key: string): any | undefined;
-    setCachedSlot(key: string, data: any): void;
+    getCachedSlot<TData extends any>(key: string): TData | undefined;
+    setCachedSlot<TData extends any>(key: string, data: TData): void;
 }
 
 export class CacheService implements ICacheService {
@@ -19,7 +19,7 @@ export class CacheService implements ICacheService {
         console.log('Initializing cache for data');
     }
 
-    public getCachedSlot<TData = any>(key: string): TData | undefined {
+    public getCachedSlot<TData extends any>(key: string): TData | undefined {
         const slot = this.cache.get(key);
 
         if (slot) {
@@ -32,7 +32,7 @@ export class CacheService implements ICacheService {
         return undefined;
     }
 
-    public setCachedSlot(key: string, data: any): void {
+    public setCachedSlot<TData extends any>(key: string, data: TData): void {
         // eslint-disable-next-line no-console
         console.log('\x1b[32m%s\x1b[0m', `Adding cache slot: ${key}`);
 
