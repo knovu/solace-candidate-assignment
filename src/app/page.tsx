@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { Box, Heading, HStack, Spacer, VStack } from '@chakra-ui/react';
 import { AdvocateTable } from './components';
@@ -6,7 +8,7 @@ const Home = () => {
     return (
         <VStack w="100%" h="100vh">
             {/* Page header */}
-            <HStack w="100%" h={12} bgColor="#265b4e" justify="center">
+            <HStack w="100%" h={'50px'} bgColor="#265b4e" justify="center">
                 <Heading color="white">Solace Candidate Assignment</Heading>
             </HStack>
 

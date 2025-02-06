@@ -3,6 +3,8 @@
 import { AdvocatedResponse } from '@/@types';
 import { toaster } from '../ui';
 import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
+import { useCallback } from 'react';
 
 interface GetAdvocatesParams {
     limit?: number;
@@ -31,16 +33,37 @@ const fetchAdvocates = async (options: GetAdvocatesParams = {}): Promise<Advocat
     return response.json();
 };
 
-const useGetAdvocates = () => {
-    const { data, isLoading, error, refetch } = useQuery({
-        queryKey: ['advocates'],
-        queryFn: (context) => fetchAdvocates(context.queryKey[1] as GetAdvocatesParams),
-        enabled: false, // Prevent automatic fetching
+const useGetAdvocates = (initialLimit = 10, initialOffset = 0) => {
+    const [limit, setLimit] = useState<number | undefined>(initialLimit);
+    const [offset, setOffset] = useState<number | undefined>(initialOffset);
+    const [search, setSearch] = useState<string | undefined>('');
+
+    const query = useQuery({
+        queryKey: ['searchData', { limit, offset, search }],
+        queryFn: () => {
+            console.log({
+                limit,
+                offset,
+                search,
+            });
+
+            fetchAdvocates({ limit, offset, search });
+        },
+        enabled: false,
     });
 
-    console.log('Data: ', data);
+    const fetchData = useCallback((options?: GetAdvocatesParams) => {
+        if (options) {
+            const { limit, offset, search } = options;
+            setLimit(limit);
+            setOffset(offset);
+            setSearch(search);
+        }
 
-    return { advocateData: data, isLoading, error, refetch };
+        query.refetch();
+    }, []);
+
+    return { ...query, fetchData };
 };
 
 export default useGetAdvocates;

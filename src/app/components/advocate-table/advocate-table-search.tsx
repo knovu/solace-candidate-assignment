@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { Button, InputGroup } from '../ui';
 import { HStack, Icon } from '@chakra-ui/react';
@@ -15,32 +17,28 @@ const AdvocateTableSearch = (props: AdvocateTableSearchProps) => {
     const { search, onSearch } = props;
     const [value, setValue] = useState<string>(search || '');
 
-    const handleOnChange = useCallback(
-        (e: React.ChangeEvent<HTMLInputElement>) => {
-            const val = e.target.value;
-
-            if (onSearch) {
-                onSearch(val);
-            }
-
-            return setValue(val);
-        },
-        [onSearch],
-    );
+    const handleOnChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        const val = e.target.value;
+        return setValue(val);
+    }, []);
 
     const handleOnSubmit = useCallback(() => {
         if (onSearch) {
-            onSearch(value);
+            if (search !== value) {
+                onSearch(value);
+            }
         }
-    }, [onSearch, value]);
+    }, [onSearch, search, value]);
 
     const handleOnKeyDown = useCallback(
         (event: React.KeyboardEvent<HTMLInputElement>) => {
             if (event.key === 'Enter' && onSearch) {
-                onSearch(value);
+                if (search !== value) {
+                    onSearch(value);
+                }
             }
         },
-        [onSearch, value],
+        [onSearch, search, value],
     );
 
     return (
