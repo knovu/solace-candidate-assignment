@@ -1,14 +1,14 @@
+version: '3.8'
+
 services:
-  db:
-    image: postgres
-    restart: always
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: solaceassignment
-    volumes:
-      - psql:/var/lib/postgresql/data
-    ports:
-      - 5432:5432
+    db:
+        image: postgres
+        restart: unless-stopped # We don't want this to run indefinitely
+        env_file:
+            - .env # Centralize .env variables from an external file
+        volumes:
+            - psql:/var/lib/postgresql/data
+        ports:
+            - 5432:5432
 volumes:
-  psql:
+    psql:
