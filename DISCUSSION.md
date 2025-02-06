@@ -60,5 +60,6 @@ At Solace, we aim to match patients with the advocate who is best suited to thei
 2. Handle case sensitivity for searching
 3. Make cache service a static class to only allow one instance of the cache available everywhere (mocking dependency injection)
 4. Add unit test libs like next testing, and react test lib for TDD
+5. Add debouncing for automatic searching in the input field rather than on submit
 
 `rubber duck :)`
