@@ -32,6 +32,8 @@ export interface PageResponse<TData extends any> {
 
 export type Tuple<T = any, K = any> = [T, K];
 
+// TODO: Resolve why this is causing type inference issues for the `createdAt` date type
+// @ts-ignore
 export interface Advocate extends InferSelectModel<typeof advocates> {}
 
 export interface AdvocatePageOptions extends PageOptions {}
