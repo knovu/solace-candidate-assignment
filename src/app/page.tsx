@@ -1,91 +1,32 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
+import React from 'react';
+import { Box, Heading, HStack, Spacer, VStack } from '@chakra-ui/react';
+import { AdvocateTable } from './components';
 
-export default function Home() {
-  const [advocates, setAdvocates] = useState([]);
-  const [filteredAdvocates, setFilteredAdvocates] = useState([]);
+const Home = () => {
+    return (
+        <VStack w="100%" h="100vh">
+            {/* Page header */}
+            <HStack w="100%" h={'50px'} bgColor="#265b4e" justify="center">
+                <Heading color="white">Solace Candidate Assignment</Heading>
+            </HStack>
 
-  useEffect(() => {
-    console.log("fetching advocates...");
-    fetch("/api/advocates").then((response) => {
-      response.json().then((jsonResponse) => {
-        setAdvocates(jsonResponse.data);
-        setFilteredAdvocates(jsonResponse.data);
-      });
-    });
-  }, []);
+            {/* Page content */}
+            <Box py={5}>
+                <AdvocateTable />
+            </Box>
 
-  const onChange = (e) => {
-    const searchTerm = e.target.value;
+            <Spacer />
 
-    document.getElementById("search-term").innerHTML = searchTerm;
+            {/* Page footer */}
+            <HStack py={5} px={5} w="100%" justify={'center'}>
+                <Heading fontSize={'sm'}>
+                    © {new Date().getFullYear()} Find Solace, Inc. All rights reserved.
+                </Heading>
+            </HStack>
+        </VStack>
+    );
+};
 
-    console.log("filtering advocates...");
-    const filteredAdvocates = advocates.filter((advocate) => {
-      return (
-        advocate.firstName.includes(searchTerm) ||
-        advocate.lastName.includes(searchTerm) ||
-        advocate.city.includes(searchTerm) ||
-        advocate.degree.includes(searchTerm) ||
-        advocate.specialties.includes(searchTerm) ||
-        advocate.yearsOfExperience.includes(searchTerm)
-      );
-    });
-
-    setFilteredAdvocates(filteredAdvocates);
-  };
-
-  const onClick = () => {
-    console.log(advocates);
-    setFilteredAdvocates(advocates);
-  };
-
-  return (
-    <main style={{ margin: "24px" }}>
-      <h1>Solace Advocates</h1>
-      <br />
-      <br />
-      <div>
-        <p>Search</p>
-        <p>
-          Searching for: <span id="search-term"></span>
-        </p>
-        <input style={{ border: "1px solid black" }} onChange={onChange} />
-        <button onClick={onClick}>Reset Search</button>
-      </div>
-      <br />
-      <br />
-      <table>
-        <thead>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>City</th>
-          <th>Degree</th>
-          <th>Specialties</th>
-          <th>Years of Experience</th>
-          <th>Phone Number</th>
-        </thead>
-        <tbody>
-          {filteredAdvocates.map((advocate) => {
-            return (
-              <tr>
-                <td>{advocate.firstName}</td>
-                <td>{advocate.lastName}</td>
-                <td>{advocate.city}</td>
-                <td>{advocate.degree}</td>
-                <td>
-                  {advocate.specialties.map((s) => (
-                    <div>{s}</div>
-                  ))}
-                </td>
-                <td>{advocate.yearsOfExperience}</td>
-                <td>{advocate.phoneNumber}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </main>
-  );
-}
+export default Home;

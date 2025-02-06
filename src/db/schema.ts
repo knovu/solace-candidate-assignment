@@ -21,6 +21,8 @@ const advocates = pgTable(
         specialties: jsonb('payload').default([]).notNull(),
         yearsOfExperience: integer('years_of_experience').notNull(),
         phoneNumber: bigint('phone_number', { mode: 'number' }).notNull(),
+
+        // @ts-ignore
         createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`),
     },
     (table) => ({

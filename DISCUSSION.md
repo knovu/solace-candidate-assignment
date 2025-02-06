@@ -35,9 +35,9 @@ At Solace, we aim to match patients with the advocate who is best suited to thei
 - Implement lite cache service (use map maybe?) for showcasing caching knowledge
 - Implement advocate service for dynamically pulling data from DB or static data
 - Define a strongly-typed API interface for:
-  - limit
-  - offset
-  - search term (supports full-text search)
+    - limit
+    - offset
+    - search term (supports full-text search)
 - Validate max allowed limit/offset params
 
 ---
@@ -59,5 +59,8 @@ At Solace, we aim to match patients with the advocate who is best suited to thei
 1. Change phone number to be a `VARCHAR(10)` from `BIGINT`
 2. Handle case sensitivity for searching
 3. Make cache service a static class to only allow one instance of the cache available everywhere (mocking dependency injection)
+4. Add unit test libs like next testing, and react test lib for TDD
+5. Add debouncing for automatic searching in the input field rather than on submit
+6. Convert table loader to a skeleton table for seamless loading and better user experience
 
 `rubber duck :)`

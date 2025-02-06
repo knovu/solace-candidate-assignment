@@ -1,22 +1,25 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import { Providers } from './providers';
+import { PropsWithChildren } from 'react';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata: Metadata = {
-  title: "Solace Candidate Assignment",
-  description: "Show us what you got",
+    title: 'Solace Candidate Assignment',
+    description: 'Show us what you got',
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
-  );
+interface RootLayoutProps extends Readonly<PropsWithChildren> {}
+
+export default function RootLayout(props: RootLayoutProps) {
+    const { children } = props;
+
+    return (
+        <html lang="en" suppressHydrationWarning className={inter.className}>
+            <body>
+                <Providers>{children}</Providers>
+            </body>
+        </html>
+    );
 }
