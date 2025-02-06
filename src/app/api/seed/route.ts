@@ -1,9 +1,21 @@
-import db from "../../../db";
-import { advocates } from "../../../db/schema";
-import { advocateData } from "../../../db/seed/advocates";
+import db from '../../../db';
+import { advocates } from '../../../db/schema';
+import { advocateData } from '../../../db/seed/advocates';
 
 export async function POST() {
-  const records = await db.insert(advocates).values(advocateData).returning();
+    if (!db) {
+        return Response.json(
+            {
+                error: 'Internal Server Error',
+                errors: 'Database was not set. Did you forget to start your db?',
+            },
+            {
+                status: 500,
+            },
+        );
+    }
 
-  return Response.json({ advocates: records });
+    const records = await db.insert(advocates).values(advocateData).returning();
+
+    return Response.json({ advocates: records });
 }
